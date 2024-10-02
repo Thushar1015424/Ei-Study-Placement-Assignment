@@ -1,0 +1,47 @@
+The code for the Virtual Classroom Manager is a console-based application built with Object-Oriented Programming (OOP) principles in Java. It handles classroom management, student enrollment, and assignment scheduling and submission. Let’s break down the core components and the overall design:
+
+1. ClassroomManager 
+The ClassroomManager class is responsible for managing classrooms in the system. It follows the Singleton Pattern, ensuring that only one instance of ClassroomManager exists throughout the application. This is useful because it centralizes the management of classrooms, students, and assignments.
+-- Singleton Pattern: The constructor is private, preventing multiple instances. The getInstance() method ensures that there is only one instance of the ClassroomManager that can be accessed globally.
+-- The class maintains a list of Classroom objects and provides methods to add, remove, and retrieve classrooms.
+
+2. Classroom
+The Classroom class represents an individual classroom. It manages the list of students and assignments within that classroom. This class follows the Single Responsibility Principle (SRP), where each class has one job, in this case, managing students and assignments for that classroom.
+-- Encapsulation: The classroom’s state (name, students, assignments) is private, and only accessible through public methods (like addStudent(), scheduleAssignment()).
+-- Each classroom has:
+      A List<Student> to keep track of students enrolled in that classroom.
+      A List<Assignment> to manage assignments scheduled for the classroom.
+Key Methods:
+-- addStudent(Student student): Enrolls a student in the classroom and prints a confirmation message.
+-- scheduleAssignment(Assignment assignment): Adds an assignment to the classroom and prints a confirmation message.
+-- submitAssignment(String studentId, String assignmentName): Allows students to submit assignments.
+
+3. Student
+The Student class represents a student with a unique ID. It follows the Single Responsibility Principle (SRP), where its sole purpose is to represent student data.
+-- Encapsulation: The student's ID is private and accessed via the getId() method.
+
+4. Assignment
+The Assignment class represents assignments that can be scheduled for a classroom and submitted by students. It uses a Set<String> to store student IDs who have submitted the assignment, ensuring that each student can only submit once.
+-- Data Validation: The submit() method checks if the student has already submitted the assignment. If so, it displays an error message; otherwise, it records the submission.
+
+5. VirtualClassroomManagerApp (Main Class)
+This class contains the main method that runs the program, acting as the user interface (via the console) and allowing the user to interact with the system by adding classrooms, students, and managing assignments.
+
+Menu-Driven Interface: The program provides a console-based interface where users can:
+-- Add classrooms.
+-- Enroll students in classrooms.
+-- Schedule assignments for classrooms.
+-- Submit assignments by students.
+-- List classrooms, students, and assignments.
+-- Remove classrooms.
+
+Dynamic Interaction: The user interacts dynamically with the program through various menu options, creating a flexible system that can handle multiple classrooms, students, and assignments.
+
+OOP Principles:
+-- Encapsulation: Each class (Classroom, Student, Assignment) encapsulates its own behavior and state, ensuring that data is managed correctly.
+-- Single Responsibility Principle (SRP): Each class has a single responsibility. For instance, the Classroom class manages students and assignments related to that classroom only.
+-- Modularity: Each class performs a specific role, making the system modular and easy to maintain or extend.
+
+SOLID Principles:
+-- Singleton Pattern: Ensures there is only one instance of the ClassroomManager across the system.
+-- Open/Closed Principle: The design can be extended (e.g., new functionality like grading) without modifying existing classes.
