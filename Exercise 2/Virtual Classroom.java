@@ -157,101 +157,140 @@ public class VirtualClassroomManagerApp {
         ClassroomManager manager = ClassroomManager.getInstance();
         boolean running = true;
 
+        System.out.println("Welcome to the Virtual Classroom Manager.");
+        System.out.println("Type 'help' for a list of commands.");
+
         while (running) {
-            System.out.println("\nMenu:");
-            System.out.println("1. Add Classroom");
-            System.out.println("2. Add Student to Classroom");
-            System.out.println("3. Schedule Assignment");
-            System.out.println("4. Submit Assignment");
-            System.out.println("5. List Classrooms");
-            System.out.println("6. List Students in Classroom");
-            System.out.println("7. List Assignments in Classroom");
-            System.out.println("8. Remove Classroom");
-            System.out.println("9. Exit");
+            System.out.print("\n> ");
+            String input = scanner.nextLine();
+            String[] commandParts = input.split(" ");
 
-            System.out.print("Enter choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            if (commandParts.length == 0) {
+                System.out.println("Invalid command. Type 'help' for a list of commands.");
+                continue;
+            }
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter classroom name: ");
-                    String className = scanner.nextLine();
-                    manager.addClassroom(className);
-                    break;
-                case 2:
-                    System.out.print("Enter student ID: ");
-                    String studentId = scanner.nextLine();
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine();
-                    Classroom classroom = manager.getClassroomByName(className);
-                    if (classroom != null) {
-                        Student student = new Student(studentId);
-                        classroom.addStudent(student);
+            String command = commandParts[0];
+
+            switch (command.toLowerCase()) {
+                case "add_classroom":
+                    if (commandParts.length == 2) {
+                        String className = commandParts[1];
+                        manager.addClassroom(className);
                     } else {
-                        System.out.println("Classroom not found.");
+                        System.out.println("Usage: add_classroom <classroom_name>");
                     }
                     break;
-                case 3:
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine();
-                    classroom = manager.getClassroomByName(className);
-                    if (classroom != null) {
-                        System.out.print("Enter assignment name: ");
-                        String assignmentName = scanner.nextLine();
-                        Assignment assignment = new Assignment(assignmentName);
-                        classroom.scheduleAssignment(assignment);
+
+                case "add_student":
+                    if (commandParts.length == 3) {
+                        String studentId = commandParts[1];
+                        String className = commandParts[2];
+                        Classroom classroom = manager.getClassroomByName(className);
+                        if (classroom != null) {
+                            Student student = new Student(studentId);
+                            classroom.addStudent(student);
+                        } else {
+                            System.out.println("Classroom not found.");
+                        }
                     } else {
-                        System.out.println("Classroom not found.");
+                        System.out.println("Usage: add_student <student_id> <classroom_name>");
                     }
                     break;
-                case 4:
-                    System.out.print("Enter student ID: ");
-                    studentId = scanner.nextLine();
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine();
-                    classroom = manager.getClassroomByName(className);
-                    if (classroom != null) {
-                        System.out.print("Enter assignment name: ");
-                        String assignmentName = scanner.nextLine();
-                        classroom.submitAssignment(studentId, assignmentName);
+
+                case "schedule_assignment":
+                    if (commandParts.length == 3) {
+                        String className = commandParts[1];
+                        String assignmentName = commandParts[2];
+                        Classroom classroom = manager.getClassroomByName(className);
+                        if (classroom != null) {
+                            Assignment assignment = new Assignment(assignmentName);
+                            classroom.scheduleAssignment(assignment);
+                        } else {
+                            System.out.println("Classroom not found.");
+                        }
                     } else {
-                        System.out.println("Classroom not found.");
+                        System.out.println("Usage: schedule_assignment <classroom_name> <assignment_name>");
                     }
                     break;
-                case 5:
+
+                case "submit_assignment":
+                    if (commandParts.length == 4) {
+                        String studentId = commandParts[1];
+                        String className = commandParts[2];
+                        String assignmentName = commandParts[3];
+                        Classroom classroom = manager.getClassroomByName(className);
+                        if (classroom != null) {
+                            classroom.submitAssignment(studentId, assignmentName);
+                        } else {
+                            System.out.println("Classroom not found.");
+                        }
+                    } else {
+                        System.out.println("Usage: submit_assignment <student_id> <classroom_name> <assignment_name>");
+                    }
+                    break;
+
+                case "list_classrooms":
                     manager.listClassrooms();
                     break;
-                case 6:
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine();
-                    classroom = manager.getClassroomByName(className);
-                    if (classroom != null) {
-                        classroom.listStudents();
+
+                case "list_students":
+                    if (commandParts.length == 2) {
+                        String className = commandParts[1];
+                        Classroom classroom = manager.getClassroomByName(className);
+                        if (classroom != null) {
+                            classroom.listStudents();
+                        } else {
+                            System.out.println("Classroom not found.");
+                        }
                     } else {
-                        System.out.println("Classroom not found.");
+                        System.out.println("Usage: list_students <classroom_name>");
                     }
                     break;
-                case 7:
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine();
-                    classroom = manager.getClassroomByName(className);
-                    if (classroom != null) {
-                        classroom.listAssignments();
+
+                case "list_assignments":
+                    if (commandParts.length == 2) {
+                        String className = commandParts[1];
+                        Classroom classroom = manager.getClassroomByName(className);
+                        if (classroom != null) {
+                            classroom.listAssignments();
+                        } else {
+                            System.out.println("Classroom not found.");
+                        }
                     } else {
-                        System.out.println("Classroom not found.");
+                        System.out.println("Usage: list_assignments <classroom_name>");
                     }
                     break;
-                case 8:
-                    System.out.print("Enter classroom name to remove: ");
-                    className = scanner.nextLine();
-                    manager.removeClassroom(className);
+
+                case "remove_classroom":
+                    if (commandParts.length == 2) {
+                        String className = commandParts[1];
+                        manager.removeClassroom(className);
+                    } else {
+                        System.out.println("Usage: remove_classroom <classroom_name>");
+                    }
                     break;
-                case 9:
+
+                case "exit":
                     running = false;
+                    System.out.println("Exiting the Virtual Classroom Manager.");
                     break;
+
+                case "help":
+                    System.out.println("Available commands:");
+                    System.out.println("  add_classroom <classroom_name>");
+                    System.out.println("  add_student <student_id> <classroom_name>");
+                    System.out.println("  schedule_assignment <classroom_name> <assignment_name>");
+                    System.out.println("  submit_assignment <student_id> <classroom_name> <assignment_name>");
+                    System.out.println("  list_classrooms");
+                    System.out.println("  list_students <classroom_name>");
+                    System.out.println("  list_assignments <classroom_name>");
+                    System.out.println("  remove_classroom <classroom_name>");
+                    System.out.println("  exit");
+                    break;
+
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println("Unknown command. Type 'help' for a list of commands.");
                     break;
             }
         }
