@@ -25,23 +25,48 @@ The Assignment class represents assignments that can be scheduled for a classroo
 -- Data Validation: The submit() method checks if the student has already submitted the assignment. If so, it displays an error message; otherwise, it records the submission.
 
 5. VirtualClassroomManagerApp (Main Class)
-This class contains the main method that runs the program, acting as the user interface (via the console) and allowing the user to interact with the system by adding classrooms, students, and managing assignments.
+The VirtualClassroomManagerApp class serves as the central point where the user interacts with the system through a terminal-based interface. It processes the user's input in the form of commands rather than using a traditional numbered menu. This approach mimics how command-line interfaces work, where specific actions are invoked by typing textual commands.
 
-Menu-Driven Interface: The program provides a console-based interface where users can:
--- Add classrooms.
--- Enroll students in classrooms.
--- Schedule assignments for classrooms.
--- Submit assignments by students.
--- List classrooms, students, and assignments.
--- Remove classrooms.
+Command-Based Input
+The system expects the user to type commands such as "add_classroom Math101" or "add_student 12345 Math101". These commands are then processed to determine the appropriate action. The input from the user is split into components:
+-- The first part is the command itself (e.g., add_classroom, add_student).
+-- The remaining parts are the arguments needed to execute the command (e.g., classroom name, student ID).
+-- The program reads this input as a single line and splits it into parts to extract the command and the necessary arguments.
 
-Dynamic Interaction: The user interacts dynamically with the program through various menu options, creating a flexible system that can handle multiple classrooms, students, and assignments.
+Command Interpretation
+After receiving the user's input, the system uses a switch-case structure to interpret the command and execute the corresponding action. Each command (like adding a classroom, scheduling an assignment, or submitting an assignment) is matched against the first part of the user input. Based on the command, the system determines what action to take.
+For example:
+-- The add_classroom command is followed by a classroom name, and the system creates a new classroom with that name.
+-- The add_student command requires both a student ID and a classroom name. The system checks if the classroom exists and then enrolls the student.
 
-OOP Principles:
--- Encapsulation: Each class (Classroom, Student, Assignment) encapsulates its own behavior and state, ensuring that data is managed correctly.
--- Single Responsibility Principle (SRP): Each class has a single responsibility. For instance, the Classroom class manages students and assignments related to that classroom only.
--- Modularity: Each class performs a specific role, making the system modular and easy to maintain or extend.
+Argument Validation
+To ensure the commands are used correctly, the program checks if the correct number of arguments are provided:
+-- For adding a classroom: The user must provide exactly one argument (the classroom name).
+-- For adding a student: The user must provide two arguments (the student ID and classroom name).
+-- If the command is incomplete or missing arguments, the system provides a usage message that explains how to correctly use the command. This helps guide the user to input the correct information.
 
-SOLID Principles:
--- Singleton Pattern: Ensures there is only one instance of the ClassroomManager across the system.
--- Open/Closed Principle: The design can be extended (e.g., new functionality like grading) without modifying existing classes.
+Help Command
+A special command, "help", is provided to display a list of all available commands. When the user types "help", the system prints out each command along with its expected syntax. This is useful for reminding the user of how to interact with the system or to learn what commands are available.
+
+Error Handling and Feedback
+The system is designed to handle common errors gracefully. If a user enters a command that references a non-existent classroom or submits an assignment incorrectly, the system provides clear feedback, such as:
+-- Indicating that the classroom was not found.
+-- Explaining the correct usage of the command if arguments are missing.
+-- This feedback helps the user understand what went wrong and how to fix it.
+
+Exit Command
+To end the program, the user can type the "exit" command. This stops the program's input loop and provides a message indicating that the system is shutting down. The program will then terminate, exiting the application cleanly.
+
+Example of Typical Commands
+Some typical commands that the user might enter include:
+-- Adding a classroom: Creates a new classroom by typing add_classroom followed by the classroom name.
+-- Enrolling a student: Adds a student to an existing classroom by typing add_student followed by the student ID and the classroom name.
+-- Scheduling an assignment: Schedules a new assignment for a classroom by typing schedule_assignment followed by the classroom name and assignment details.
+-- Listing classrooms, students, or assignments: These commands display relevant information about the classrooms, students, or assignments in the system.
+
+Overall Functionality
+The program processes user commands dynamically, allowing for flexible interaction. It ensures that:
+-- The correct commands are executed based on user input.
+-- Appropriate error messages are displayed if something goes wrong.
+-- The user has access to a help system for understanding commands.
+-- The program can be easily extended to support new commands or features, thanks to its structured design.
