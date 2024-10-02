@@ -1,0 +1,34 @@
+Behavioral Design Pattern --------------------------------------------------------------------------------------
+These design patterns deal with communication between objects, focusing on how objects interact and provide solutions for managing complex object communication.
+A.	Observer Pattern – Weather Monitoring System
+The Observer Pattern defines a one-to-many relationship between objects. When one object (subject) changes state, all its dependents (observers) are notified and updated automatically.
+In Weather Monitoring System, different devices like mobile phones, TVs, and watches need to get real-time weather updates when conditions change. Each device subscribes to the weather station, which is the subject. When the weather changes, the devices receive updates.
+
+B.	Strategy Pattern – Payment Processing System
+The Strategy Pattern defines a family of algorithms (strategies) and makes them interchangeable. This pattern allows selecting algorithms at runtime based on the user's requirements.
+This system allows users to choose between different payment methods (e.g., credit card, PayPal, Bitcoin). The payment method is selected dynamically depending on the user's choice.
+
+
+
+Creational Design Pattern --------------------------------------------------------------------------------------
+These patterns focus on how objects are created, ensuring flexibility and scalability in object creation.
+A.	Factory Pattern – Vehicle Manufacturing System
+The Factory Pattern defines an interface for creating objects but lets subclasses decide which class to instantiate. It is used when the exact type of object that needs to be created is unknown until runtime.
+This is a system that creates different types of vehicles (car, bike, truck) based on user selection. The factory determines which vehicle class (e.g., Car, Truck) to instantiate based on the input.
+
+B.	Singleton Pattern – Logging System
+The Singleton Pattern ensures that a class has only one instance and provides a global point of access to that instance. It is useful in cases where you need a single point of control for certain system-wide operations.
+A logging mechanism in an application that ensures all log messages are directed to the same log file. There is only one logger instance shared across the system.
+
+
+
+Structural Design Pattern --------------------------------------------------------------------------------------
+These patterns focus on how objects are composed and structured to form larger structures, ensuring flexibility and efficiency in the relationships between them.
+A.	Adapter Pattern – Payment Gateway Integration
+The Adapter Pattern allows objects with incompatible interfaces to work together. It wraps an existing class with a new interface that is compatible with the client's expectations.
+This is a system that integrates multiple payment gateways (like PayPal, Stripe, Square) into a unified interface, allowing them to interact with the main application seamlessly.
+
+B.	Decorator Pattern – Coffee Shop Application
+The Decorator Pattern allows behavior to be added to individual objects, dynamically, without affecting the behavior of other objects from the same class. It provides a flexible alternative to subclassing for extending functionality.
+This is a system where a base coffee order can have different add-ons (milk, sugar, syrup) applied dynamically. The decorator adds additional properties to the base coffee order.
+
